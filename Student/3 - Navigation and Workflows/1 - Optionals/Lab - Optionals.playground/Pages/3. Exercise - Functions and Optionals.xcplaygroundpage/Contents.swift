@@ -5,7 +5,22 @@
  */
 let userInputAge: String = "34e"
 
-
+func checkAge (age: String) -> Int?{
+    
+   guard let currentAge = Int(age) else {
+        print("can you please re-enter your age?")
+        return nil
+   }
+    if currentAge >= 18  {
+        print("Welcome")
+        return currentAge
+    } else {
+        print("sorry, something went wrong. Please re-enter your age.")
+        return nil
+    }
+}
+checkAge(age: userInputAge)
+checkAge(age: "34")
 //:  Go back and update your function to return the age as an integer. Will your function always return a value? Make sure your return type accurately reflects this. Call the function and print the return value.
 
 
@@ -13,7 +28,14 @@ let userInputAge: String = "34e"
 var prices = ["Chips": 2.99, "Donuts": 1.89, "Juice": 3.99, "Apple": 0.50, "Banana": 0.25, "Broccoli": 0.99]
 var stock = ["Chips": 4, "Donuts": 0, "Juice": 12, "Apple": 6, "Banana": 6, "Broccoli": 3]
 
+func stockPrices (item: String) -> Double? {
+    if let currentStock = stock[item], currentStock > 0 {
+        return prices[item]
+    }
+    return nil
+}
 
+print(stockPrices(item: "Chips") as Any)
 /*:
 [Previous](@previous)  |  page 3 of 6  |  [Next: App Exercise - Food Functions](@next)
  */
