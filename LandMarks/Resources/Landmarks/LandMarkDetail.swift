@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LandMarkDetail: View {
+struct LandmarkDetail: View {
     @EnvironmentObject var modelData: ModelData
     var landmark: Landmark
     
@@ -60,7 +60,7 @@ struct LandMarkDetail: View {
 
 struct LandMarkDetail_Previews: PreviewProvider {
     static var previews: some View {
-        LandMarkDetail(landmark: ModelData() .landmarks[0])
+        LandmarkDetail(landmark: ModelData() .landmarks[0])
             .environmentObject(ModelData())
     }
 }
