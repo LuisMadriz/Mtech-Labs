@@ -223,7 +223,7 @@ class EmojiCollectionViewController: UICollectionViewController {
 
     
         //Step 2: Fetch model object to display
-        let emoji = emojis[indexPath.item]
+        let emoji = sections[indexPath.section].emojis[indexPath.item]
 
         //Step 3: Configure cell
         cell.update(with: emoji)
