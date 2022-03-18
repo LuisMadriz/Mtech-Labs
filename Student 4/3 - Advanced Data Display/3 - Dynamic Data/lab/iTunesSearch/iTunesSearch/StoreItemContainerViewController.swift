@@ -10,8 +10,28 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
     let storeItemController = StoreItemController()
     
     var items = [StoreItem]()
+    
+    var filteredItemsSnapshot: NSDiffableDataSourceSnapshot<String,
+       StoreItem> {
+        var snapshot = NSDiffableDataSourceSnapshot<String,
+           StoreItem>()
+    
+        for section in items {
+            snapshot.appendSections([section])
+            snapshot.appendItems(StoreItem]!)
+        }
+    
+        return snapshot
+    }
 
+    
+    
     let queryOptions = ["movie", "music", "software", "ebook"]
+    
+    var tableViewDataSource: UITableViewDiffableDataSource<String, StoreItem>!
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +44,37 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         searchController.searchBar.scopeButtonTitles = ["Movies", "Music", "Apps", "Books"]
     }
     
+    
     func updateSearchResults(for searchController: UISearchController) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(fetchMatchingItems), object: nil)
         perform(#selector(fetchMatchingItems), with: nil, afterDelay: 0.3)
+    }
+    
+    func configureTableViewDataSource(_ tableView: UITableView) {
+        tableViewDataSource = UITableViewDiffableDataSource<String,
+           StoreItem>(tableView: tableView, cellProvider:
+           { (tableView, indexPath, item) -> UITableViewCell? in
+            let cell =
+               tableView.dequeueReusableCell(withIdentifier:
+               "Item", for: indexPath) as! ItemTableViewCell
+    
+            cell.titleLabel.text = item.name
+            cell.detailLabel.text = item.artist
+            cell.itemImageView?.image = UIImage(systemName: "photo")
+    
+            self.storeItemController.fetchImage(from: item.artworkURL) { (result) in
+                switch result {
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        cell.itemImageView.image = image
+                    }
+                case .failure(let error):
+                    print("Error fetching image: \(error)")
+                }
+            }
+    
+            return cell
+        })
     }
                 
     @IBAction func switchContainerView(_ sender: UISegmentedControl) {
