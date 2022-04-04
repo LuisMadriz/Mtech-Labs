@@ -17,7 +17,7 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
            StoreItem>()
     
         for section in items {
-            snapshot.appendSections([section])
+            snapshot.appendSections(section)
             snapshot.appendItems(StoreItem]!)
         }
     
